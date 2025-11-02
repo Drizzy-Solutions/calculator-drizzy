@@ -1,0 +1,9 @@
+{
+  "apps": [
+    {
+      "id": "calculator",
+      "gradleModule": ":app",
+      "variant": "release"
+    }
+  ]
+}
