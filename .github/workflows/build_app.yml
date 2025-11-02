@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       app_id:        { description: "ID from repo-config.json", required: true }
-      inject_json:   { description: "JSON map of config to inject", required: true }
+
       release_tag:   { description: "Release tag to create", required: true }
       catalog_ref:   { description: "Optional catalog info", required: false }
 jobs:
@@ -16,10 +16,7 @@ jobs:
         with: { distribution: temurin, java-version: '17' }
       - uses: android-actions/setup-android@v3
       - uses: gradle/actions/setup-gradle@v4
-      - name: Inject config (generated-config.properties)
-        run: |
-          echo '${{ github.event.inputs.inject_json }}' | jq -r 'to_entries | .[] | "\(.key)=\(.value)"' > app/generated-config.properties
-          cat app/generated-config.properties || true
+      
       - name: Build Release
         run: ./gradlew assembleRelease || gradle assembleRelease
       - name: Find APK
